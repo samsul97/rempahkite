@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Customer;
+use app\models\UserRole;
 
 /**
- * CustomerSearch represents the model behind the search form of `app\models\Customer`.
+ * UserRoleSearch represents the model behind the search form of `app\models\UserRole`.
  */
-class CustomerSearch extends Customer
+class UserRoleSearch extends UserRole
 {
     /**
      * {@inheritdoc}
@@ -19,7 +19,7 @@ class CustomerSearch extends Customer
     {
         return [
             [['id'], 'integer'],
-            [['nama', 'email', 'alamat', 'jenis_kelamin', 'no_telp'], 'safe'],
+            [['nama'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class CustomerSearch extends Customer
      */
     public function search($params)
     {
-        $query = Customer::find();
+        $query = UserRole::find();
 
         // add conditions that should always apply here
 
@@ -62,11 +62,7 @@ class CustomerSearch extends Customer
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'alamat', $this->alamat])
-            ->andFilterWhere(['like', 'jenis_kelamin', $this->jenis_kelamin])
-            ->andFilterWhere(['like', 'no_telp', $this->no_telp]);
+        $query->andFilterWhere(['like', 'nama', $this->nama]);
 
         return $dataProvider;
     }

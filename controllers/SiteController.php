@@ -9,12 +9,23 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Daftar;
 
 class SiteController extends Controller
 {
     /**
      * {@inheritdoc}
      */
+    public function verifyCode()
+    {
+        return[
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+        ];
+    }
+
     public function behaviors()
     {
         return [
@@ -61,7 +72,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        // $this->layout = 'main';
         $this->layout = '@app/views/layouts/pengunjung/main';
         return $this->render('index');
     }
@@ -128,13 +138,58 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-
-    public function actionPengunjung()
+    public function actionDaftar()
     {
-    //     $this->layout = 'main-login';
-    //     return $this->render('header', [
-    //     'model' =>$model,
-    // ]);
-    // return $this->render('pengunjung');
+        $this->layout = 'main-login';
+        $model = new Daftar();
+        if ($model->load(Yii::$app->request->post()))
+        {
+            $customer = new Customer();
+            $customer->nama = $model->nama;    
+            $customer->email = $model->email;    
+            $customer->alamat = $model->alamat;    
+            $customer->jenis_kelamin = $model->jenis_kelamin;    
+            $customer->no_telp = $model->no_telp;
+            $customer->status = 1;
+            $customer->save();
+
+            $user = new User();
+            $user->id_customer = $customer->id;
+            $user->id_user_role = $customer->id;
+            $user->username = $model->username;    
+            $user->password = $model->password;    
+            $user->id_operator = 0;    
+            $user->id_user_role = 2;    
+            $user->status = 1;
+            $user->token = Yii::$app->getSecurity()->generateRandomString ($length=50);
+            $user->save();
+
+            return $this->redirect(['site/login']);
+        }
+
+        return $this->render('daftar', [
+            'model' => $model,
+        ]);
     }
+
+    public function actionBeranda()
+    {
+        if (User::isAdmin())
+        {
+            return $this->render('beranda');
+        }
+        elseif (User::isCustomer()) {
+            return $this->render('beranda');
+        }
+        elseif (User::isOperator()) {
+            return $this->render('beranda');
+        }
+        else
+        {
+            return $this->redirect(['site/login']);
+        }
+        // return $this->render('dashboard');
+    }
+
+
 }

@@ -5,22 +5,19 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "customer".
+ * This is the model class for table "user_role".
  *
  * @property int $id
  * @property string $nama
- * @property string $email
- * @property string $password
- * @property string $no_telp
  */
-class Customer extends \yii\db\ActiveRecord
+class UserRole extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'customer';
+        return 'user_role';
     }
 
     /**
@@ -29,8 +26,8 @@ class Customer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama', 'email', 'no_telp'], 'required'],
-            [['nama', 'email', 'no_telp'], 'string', 'max' => 255],
+            [['nama'], 'required'],
+            [['nama'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,8 +39,6 @@ class Customer extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nama' => 'Nama',
-            'email' => 'Email',
-            'no_telp' => 'No Telp',
         ];
     }
 }

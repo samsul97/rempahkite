@@ -31,7 +31,7 @@
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Menu Admin', 'options' => ['class' => 'header']],
-                    ['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['site/index']],
+                    ['label' => 'Dashboard', 'icon' => 'dashboard', 'url' => ['site/dashboard']],
                     // ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
                     ['label' => 'Customer', 'icon' => 'users', 'url' => ['customer/index']],
                     [

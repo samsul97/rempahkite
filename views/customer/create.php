@@ -6,13 +6,13 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Customer */
 
-$this->title = 'Create Customer';
+$this->title = 'Masuk akun RempahKita';
 $this->params['breadcrumbs'][] = ['label' => 'Customers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="customer-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h5><?= Html::encode($this->title) ?></h5>
 
     <?= $this->render('_form', [
         'model' => $model,

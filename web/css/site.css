@@ -113,3 +113,19 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+.navbar-brand {
+    height: 80px !important;
+    padding: 10px 10px !important;
+    font-size: 25px !important;
+    line-height: 30px !important;
+}
+.navbar-header{
+    height: 20px !important;
+}
+.bimg{
+    background: url("../images/test.jpg") !important ;
+    height: 100%;
+    width: 100%;
+    /*background-size: 100px;*/
+    background-size:cover;
+}

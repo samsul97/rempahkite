@@ -3,18 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Customer;
-use app\models\CustomerSearch;
+use app\models\UserRole;
+use app\models\UserRoleSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CustomerController implements the CRUD actions for Customer model.
+ * UserRoleController implements the CRUD actions for UserRole model.
  */
-class CustomerController extends Controller
+class UserRoleController extends Controller
 {
-    
     /**
      * {@inheritdoc}
      */
@@ -31,12 +30,12 @@ class CustomerController extends Controller
     }
 
     /**
-     * Lists all Customer models.
+     * Lists all UserRole models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CustomerSearch();
+        $searchModel = new UserRoleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Displays a single Customer model.
+     * Displays a single UserRole model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -59,14 +58,13 @@ class CustomerController extends Controller
     }
 
     /**
-     * Creates a new Customer model.
+     * Creates a new UserRole model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $this->layout = 'main-login';
-        $model = new Customer();
+        $model = new UserRole();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -78,7 +76,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Updates an existing Customer model.
+     * Updates an existing UserRole model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,7 +96,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * Deletes an existing Customer model.
+     * Deletes an existing UserRole model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -112,15 +110,15 @@ class CustomerController extends Controller
     }
 
     /**
-     * Finds the Customer model based on its primary key value.
+     * Finds the UserRole model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Customer the loaded model
+     * @return UserRole the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Customer::findOne($id)) !== null) {
+        if (($model = UserRole::findOne($id)) !== null) {
             return $model;
         }
 

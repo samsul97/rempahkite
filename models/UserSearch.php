@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Customer;
+use app\models\User;
 
 /**
- * CustomerSearch represents the model behind the search form of `app\models\Customer`.
+ * UserSearch represents the model behind the search form of `app\models\User`.
  */
-class CustomerSearch extends Customer
+class UserSearch extends User
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class CustomerSearch extends Customer
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['nama', 'email', 'alamat', 'jenis_kelamin', 'no_telp'], 'safe'],
+            [['id', 'id_petugas', 'id_customer', 'id_user_role', 'status'], 'integer'],
+            [['username', 'password', 'token'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class CustomerSearch extends Customer
      */
     public function search($params)
     {
-        $query = Customer::find();
+        $query = User::find();
 
         // add conditions that should always apply here
 
@@ -60,13 +60,15 @@ class CustomerSearch extends Customer
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'id_petugas' => $this->id_petugas,
+            'id_customer' => $this->id_customer,
+            'id_user_role' => $this->id_user_role,
+            'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'alamat', $this->alamat])
-            ->andFilterWhere(['like', 'jenis_kelamin', $this->jenis_kelamin])
-            ->andFilterWhere(['like', 'no_telp', $this->no_telp]);
+        $query->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'password', $this->password])
+            ->andFilterWhere(['like', 'token', $this->token]);
 
         return $dataProvider;
     }

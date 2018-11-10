@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /* @var $content string */
 
 dmstr\web\AdminLteAsset::register($this);
+app\assets\AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -16,13 +17,11 @@ dmstr\web\AdminLteAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link rel="shortcut icon" href="<?= Yii::getAlias('@web').'/images/r.png'; ?>">
 </head>
 <body class="login-page">
-
 <?php $this->beginBody() ?>
-
     <?= $content ?>
-
 <?php $this->endBody() ?>
 </body>
 </html>
