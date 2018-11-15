@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use backend\assets\AppAsset;
+use app\models\User;
 /* @var $this \yii\web\View */
 /* @var $content string */
 ?>
@@ -20,15 +21,26 @@ use backend\assets\AppAsset;
             <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <?php if (User::isAdmin()): ?>
+                         <?= User::getFotoAdmin(['class' => 'user-image']); ?>
+                     <?php endif ?>
+                     <?php if (User::isOperator()): ?>
+                         <?= User::getFotoOperator(['class' => 'user-image']); ?>
+                     <?php endif ?>
+                        <span class="hidden-xs"><?= Yii::$app->user->identity->username ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            
+                            <?php if (User::isAdmin()): ?>
+                         <?= User::getFotoAdmin(['class' => 'logo']); ?>
+                     <?php endif ?>
+                     <?php if (User::isOperator()): ?>
+                         <?= User::getFotoOperator(['class' => 'logo']); ?>
+                     <?php endif ?>
+                     
                             <p>
-                                Alexander Pierce
+                                <?= Yii::$app->user->identity->username ?>
                                 <small>Member since Nov. 2012</small>
                             </p>
                         </li>
@@ -47,7 +59,14 @@ use backend\assets\AppAsset;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <?php if (User::isOperator()): ?>
+                         <?= Html::a(
+                            'Profile',
+                            ['operator/update', 'id' => Yii::$app->user->identity->id_operator],
+                            ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
+                        ) ?>
+                    <?php endif ?>
+                    
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(

@@ -66,7 +66,7 @@ $fieldOptions2 = [
        <!-- /.social-auth-links -->
 
        <?= Html::a('Saya lupa password', ['site/forget']); ?><br>
-   <?= Html::a('Daftar menjadi member', ['site/registrasi']); ?>
+   <?= Html::a('Daftar menjadi member', ['site/registrasi-admin']); ?>
    </div>
    <!-- /.login-box-body -->
 </div><!-- /.login-box -->

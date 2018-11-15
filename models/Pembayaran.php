@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use app\models\Pesanan;
 /**
  * This is the model class for table "pembayaran".
  *
@@ -47,5 +47,18 @@ class Pembayaran extends \yii\db\ActiveRecord
             'id_transaksi' => 'Id Transaksi',
             'id_pesanan' => 'Id Pesanan',
         ];
+    }
+    public function getManyPesanan()
+    {
+        return $this->hasMany(Pesanan::class, ['id_pesanan' => 'id']);
+    }
+
+    public static function getGrafikList()
+    {
+        $data = [];
+        foreach (static::find()->all() as $pesanan) {
+            $data[] = [StringHelper::truncate($pesanan->nama, 20), (int) $pesanan->getManyPesanan()->count()];
+        }
+        return $data;
     }
 }

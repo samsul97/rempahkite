@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Produk;
 
 /**
  * This is the model class for table "kategori".
@@ -40,5 +41,26 @@ class Kategori extends \yii\db\ActiveRecord
             'id' => 'ID',
             'nama_kategori' => 'Nama Kategori',
         ];
+    }
+    public  static function getList()
+    {
+        return \yii\helpers\ArrayHelper::map(self::find()->all(), 'id', 'nama');
+    }
+    public static function getCount()
+    {
+        return static::find()->count();
+    }
+    public function getManyProduk()
+    {
+        return $this->hasMany(Produk::class, ['id_kategori' => 'id']);
+    }
+
+    public static function getGrafikList()
+    {
+        $data = [];
+        foreach (static::find()->all() as $produk) {
+            $data[] = [StringHelper::truncate($produk->nama, 20), (int) $produk->getManyProduk()->count()];
+        }
+        return $data;
     }
 }

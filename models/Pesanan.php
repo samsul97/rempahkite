@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use app\models\Customer;
 /**
  * This is the model class for table "pesanan".
  *
@@ -51,5 +51,26 @@ class Pesanan extends \yii\db\ActiveRecord
             'jumlah_total' => 'Jumlah Total',
             'status' => 'Status',
         ];
+    }
+    public  static function getList()
+    {
+        return \yii\helpers\ArrayHelper::map(self::find()->all(), 'id', 'nama');
+    }
+    public static function getCount()
+    {
+        return static::find()->count();
+    }
+    public function getManyCustomer()
+    {
+        return $this->hasMany(Customer::class, ['id_customer' => 'id']);
+    }
+
+    public static function getGrafikList()
+    {
+        $data = [];
+        foreach (static::find()->all() as $customer) {
+            $data[] = [StringHelper::truncate($customer->nama, 20), (int) $customer->getManyCustomer()->count()];
+        }
+        return $data;
     }
 }

@@ -6,23 +6,28 @@ use Yii;
 use yii\base\Model;
 
 
-
 /**
  * LoginForm is the model basename(path)ehind the login form.
  *
  * @property User|null $user This property is read-only.
  *
  */
-class Daftar extends Model
+class RegistrasiAdmin extends Model
 {
     public $username;
     public $password;
     public $nama;
-    public $email;
     public $alamat;
-    public $jenis_kelamin;
     public $no_telp;
+    public $email;
+    public $foto;
     public $verifyCode;
+    // public $captcha;
+    // public $recaptcha;
+    // public $email_var;
+    // public $rememberMe = true;
+    // private $_user = false;
+
 
     /**
      * @return array the validation rules.
@@ -38,11 +43,12 @@ class Daftar extends Model
             // ['website', 'url', 'defaultScheme' => 'http'],
             // ['recaptcha', 'compare', 'compareAttribute' => 'captcha', 'operator' => '=='],
             ['username', 'match', 'pattern' => '/^[a-z]\w*$/i', 'message' => 'Username tidak boleh kosong'],
-            [['nama', 'alamat', 'jenis_kelamin'], 'required', 'message'=> 'Data tidak boleh kosong'],
+            [['nama', 'alamat'], 'required', 'message'=> 'Data tidak boleh kosong'],
             [['password'], 'string', 'min' => 6],
             ['no_telp', 'match', 'pattern' => '/((\+[0-9]{6})|0)[-]?[0-9]{7}/', 'message' => 'Hanya dari nomor 0 sampai 9'],
-            [['email'], 'unique', 'targetClass' => '\app\models\Customer'],
             [['email'], 'email'],
+            [['email'], 'unique', 'targetClass' => '\app\models\Operator'],
+            [['foto'], 'file', 'extensions'=>'jpg, gif, png', 'maxSize'=>5218288, 'tooBig' => 'batas limit upload gambar 5mb'],
             ['verifyCode', 'captcha'],
         ];
     }

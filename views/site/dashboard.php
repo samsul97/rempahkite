@@ -3,7 +3,14 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\models\User;
+use app\models\Customer;
+use app\models\Produk;
+use app\models\Kategori;
+use app\models\Pesanan;
 use miloschuman\highcharts\Highcharts;
+use app\models\Pembayaran;
+use app\models\KeranjangProduk;
+
 /* @var $this yii\web\View */
 
 $this->title = 'Statistik Perpustakaan';
@@ -20,8 +27,8 @@ $this->title = 'Statistik Perpustakaan';
         <div class="small-box bg-blue">
           <div class="inner">
             <h3><?= Yii::$app->formatter->asInteger(Customer::getCount()); ?></h3>
-            <p>Data Buku</p>
-          </div>
+            <p>Data Customer</p>
+          </div
           <div class="icon">
             <i class="fa fa-book"></i>
           </div>
@@ -33,7 +40,7 @@ $this->title = 'Statistik Perpustakaan';
         <div class="small-box bg-green">
           <div class="inner">
             <h3><?= Yii::$app->formatter->asInteger(Produk::getCount()); ?><sup style="font-size: 20px">%</sup></h3>
-            <p>Data Anggota</p>
+            <p>Data Produk</p>
           </div>
           <div class="icon">
             <i class="fa fa-users"></i>
@@ -46,7 +53,7 @@ $this->title = 'Statistik Perpustakaan';
         <div class="small-box bg-orange">
           <div class="inner">
             <h3><?= Yii::$app->formatter->asInteger(Transaksi::getCount()); ?></h3>
-            <p>Data Peminjaman</p>
+            <p>Data Transaksi</p>
           </div>
           <div class="icon">
             <i class="fa fa-exchange"></i>
@@ -59,7 +66,7 @@ $this->title = 'Statistik Perpustakaan';
         <div class="small-box bg-red">
           <div class="inner">
             <h3><?= Yii::$app->formatter->asInteger(Kategori::getCount()); ?></h3>
-            <p>Data Penerbit</p>
+            <p>Data Kategori</p>
           </div>
           <div class="icon">
             <i class="fa fa-bookmark"></i>
@@ -117,7 +124,7 @@ $this->title = 'Statistik Perpustakaan';
                 [
                   'type' => 'pie',
                   'name' => 'Penulis',
-                  'data' => Penulis::getGrafikList(),
+                  'data' => Produk::getGrafikList(),
                 ],
               ],
             ],
@@ -192,8 +199,8 @@ $this->title = 'Statistik Perpustakaan';
         <!-- small box -->
         <div class="small-box bg-blue">
           <div class="inner">
-            <h3><?= Yii::$app->formatter->asInteger(Buku::getCount()); ?></h3>
-            <p>Data Buku</p>
+            <h3><?= Yii::$app->formatter->asInteger(Customer::getCount()); ?></h3>
+            <p>Data Customer</p>
           </div>
           <div class="icon">
             <i class="fa fa-book"></i>
@@ -205,8 +212,8 @@ $this->title = 'Statistik Perpustakaan';
         <!-- small box -->
         <div class="small-box bg-green">
           <div class="inner">
-            <h3><?= Yii::$app->formatter->asInteger(Anggota::getCount()); ?><sup style="font-size: 20px">%</sup></h3>
-            <p>Data Anggota</p>
+            <h3><?= Yii::$app->formatter->asInteger(Kategori::getCount()); ?><sup style="font-size: 20px">%</sup></h3>
+            <p>Data Kategori</p>
           </div>
           <div class="icon">
             <i class="fa fa-users"></i>
@@ -218,8 +225,8 @@ $this->title = 'Statistik Perpustakaan';
         <!-- small box -->
         <div class="small-box bg-orange">
           <div class="inner">
-            <h3><?= Yii::$app->formatter->asInteger(Peminjaman::getCount()); ?></h3>
-            <p>Data Peminjaman</p>
+            <h3><?= Yii::$app->formatter->asInteger(Produk::getCount()); ?></h3>
+            <p>Data Produk</p>
           </div>
           <div class="icon">
             <i class="fa fa-exchange"></i>
@@ -231,8 +238,8 @@ $this->title = 'Statistik Perpustakaan';
         <!-- small box -->
         <div class="small-box bg-red">
           <div class="inner">
-            <h3><?= Yii::$app->formatter->asInteger(Penerbit::getCount()); ?></h3>
-            <p>Data Penerbit</p>
+            <h3><?= Yii::$app->formatter->asInteger(Pesanan::getCount()); ?></h3>
+            <p>Data Pesanan</p>
           </div>
           <div class="icon">
             <i class="fa fa-bookmark"></i>
@@ -247,8 +254,8 @@ $this->title = 'Statistik Perpustakaan';
         <!-- small box -->
         <div class="small-box bg-blue">
           <div class="inner">
-            <h3><?= Yii::$app->formatter->asInteger(Penulis::getCount()); ?></h3>
-            <p>Data Penulis</p>
+            <h3><?= Yii::$app->formatter->asInteger(Produk::getCount()); ?></h3>
+            <p>Data Produk</p>
           </div>
           <div class="icon">
             <i class="fa fa-book"></i>
@@ -273,8 +280,8 @@ $this->title = 'Statistik Perpustakaan';
         <!-- small box -->
         <div class="small-box bg-orange">
           <div class="inner">
-            <h3><?= Yii::$app->formatter->asInteger(Petugas::getCount()); ?></h3>
-            <p>Data Petugas</p>
+            <h3><?= Yii::$app->formatter->asInteger(Produk::getCount()); ?></h3>
+            <p>Data Produk</p>
           </div>
           <div class="icon">
             <i class="fa fa-exchange"></i>
@@ -286,8 +293,8 @@ $this->title = 'Statistik Perpustakaan';
         <!-- small box -->
         <div class="small-box bg-red">
           <div class="inner">
-            <h3><?= Yii::$app->formatter->asInteger(Penerbit::getCount()); ?></h3>
-            <p>Data Penerbit</p>
+            <h3><?= Yii::$app->formatter->asInteger(Produk::getCount()); ?></h3>
+            <p>Data Produk</p>
           </div>
           <div class="icon">
             <i class="fa fa-bookmark"></i>
@@ -301,55 +308,55 @@ $this->title = 'Statistik Perpustakaan';
     <div class="row">
       <div class="col-sm-6">
         <div class="box-header with-border">
-          <h3 class="box-title">Buku Berdasarkan Kategori</h3>
+          <h3 class="box-title">Produk Berdasarkan Kategori</h3>
         </div>
         <div class="box-body">
           <?=Highcharts::widget([
-            'options' => [
-              'credits' => false,
-              'title' => ['text' => 'KATEGORI BUKU'],
-              'exporting' => ['enabled' => true],
-              'plotOptions' => [
-                'pie' => [
-                  'cursor' => 'pointer',
-                ],
-              ],
-              'series' => [
-                [
-                  'type' => 'pie',
-                  'name' => 'Kategori',
-                  'data' => Kategori::getGrafikList(),
-                ],
+          'options' => [
+            'credits' => false,
+            'title' => ['text' => 'PENERBIT BUKU'],
+            'exporting' => ['enabled' => true],
+            'plotOptions' => [
+              'pie' => [
+                'cursor' => 'pointer',
               ],
             ],
-          ]);?>
+            'series' => [
+              [
+                'type' => 'pie',
+                'name' => 'Penerbit',
+                'data' => Kategori::getGrafikList(),
+              ],
+            ],
+          ],
+        ]);?>
         </div>
       </div>
 
       <div class="col-sm-6">
         <div class="box-header with-border">
-          <h3 class="box-title">Buku Berdasarkan Penulis</h3>
+          <h3 class="box-title">Pesanan Berdasarkan Customer</h3>
         </div>
         <div class="box-body">
           <?=Highcharts::widget([
-            'options' => [
-              'credits' => false,
-              'title' => ['text' => 'PENULIS BUKU'],
-              'exporting' => ['enabled' => true],
-              'plotOptions' => [
-                'pie' => [
-                  'cursor' => 'pointer',
-                ],
-              ],
-              'series' => [
-                [
-                  'type' => 'pie',
-                  'name' => 'Penulis',
-                  'data' => Penulis::getGrafikList(),
-                ],
+          'options' => [
+            'credits' => false,
+            'title' => ['text' => 'PENERBIT BUKU'],
+            'exporting' => ['enabled' => true],
+            'plotOptions' => [
+              'pie' => [
+                'cursor' => 'pointer',
               ],
             ],
-          ]);?>
+            'series' => [
+              [
+                'type' => 'pie',
+                'name' => 'Penerbit',
+                'data' => Pesanan::getGrafikList(),
+              ],
+            ],
+          ],
+        ]);?>
         </div>
       </div>
     </div>
@@ -359,7 +366,7 @@ $this->title = 'Statistik Perpustakaan';
   <div class="row">
     <div class="col-sm-6">
       <div class="box-header with-border">
-        <h3 class="box-title">Buku Berdasarkan Penerbit</h3>
+        <h3 class="box-title">Pembayaran Berdasarkan Pesanan</h3>
       </div>
       <div class="box-body">
         <?=Highcharts::widget([
@@ -376,7 +383,7 @@ $this->title = 'Statistik Perpustakaan';
               [
                 'type' => 'pie',
                 'name' => 'Penerbit',
-                'data' => Penerbit::getGrafikList(),
+                'data' => Pembayaran::getGrafikList(),
               ],
             ],
           ],
@@ -386,13 +393,13 @@ $this->title = 'Statistik Perpustakaan';
 
     <div class="col-sm-6">
       <div class="box-header with-border">
-        <h3 class="box-title">Buku Berdasarkan Peminjaman</h3>
+        <h3 class="box-title">Keranjang Produk Berdasarkan Keranjang Sementara</h3>
       </div>
       <div class="box-body">
         <?=Highcharts::widget([
           'options' => [
             'credits' => false,
-            'title' => ['text' => 'PEMINJAMAN BUKU'],
+            'title' => ['text' => 'PENERBIT BUKU'],
             'exporting' => ['enabled' => true],
             'plotOptions' => [
               'pie' => [
@@ -402,8 +409,8 @@ $this->title = 'Statistik Perpustakaan';
             'series' => [
               [
                 'type' => 'pie',
-                'name' => 'Peminjaman',
-                'data' => Peminjaman::getGrafikList(),
+                'name' => 'Penerbit',
+                'data' => KeranjangProduk::getGrafikList(),
               ],
             ],
           ],
@@ -411,8 +418,4 @@ $this->title = 'Statistik Perpustakaan';
       </div>
     </div>
   </div>
-</div>
-</div>
-</div>
-</div>
 <?php endif ?>

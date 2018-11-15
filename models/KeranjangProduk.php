@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use app\models\Keranjang;
 /**
  * This is the model class for table "keranjang_produk".
  *
@@ -51,5 +51,18 @@ class KeranjangProduk extends \yii\db\ActiveRecord
             'harga' => 'Harga',
             'id_jasa_kirim' => 'Id Jasa Kirim',
         ];
+    }
+    public function getManyKeranjang()
+    {
+        return $this->hasMany(Keranjang::class, ['id_keranjang' => 'id']);
+    }
+
+    public static function getGrafikList()
+    {
+        $data = [];
+        foreach (static::find()->all() as $keranjang) {
+            $data[] = [StringHelper::truncate($keranjang->nama, 20), (int) $keranjang->getManyKeranjang()->count()];
+        }
+        return $data;
     }
 }

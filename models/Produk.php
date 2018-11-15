@@ -55,4 +55,13 @@ class Produk extends \yii\db\ActiveRecord
             'preview_url' => 'Preview Url',
         ];
     }
+    public  static function getList()
+    {
+        return \yii\helpers\ArrayHelper::map(self::find()->all(), 'id', 'nama');
+    }
+    public static function getCount()
+    {
+        return static::find()->count();
+    }
+    
 }

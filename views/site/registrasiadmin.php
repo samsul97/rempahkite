@@ -1,14 +1,14 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use app\models\Daftar;
+use app\models\Registrasi;
 use yii\captcha\Captcha;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
 
-$this->title = 'Daftar';
+$this->title = 'Sign Up';
 
 $fieldOptions1 = [
  'options' => ['class' => 'form-group has-feedback'],
@@ -42,14 +42,14 @@ $fieldOptions6 = [
 
 <div class="login-box">
  <div class="login-logo">
-   <a href="#"><b>Rempah</b>Kita</a>
+   <a href="#"><b>Perpus</b>JJ</a>
 
  </div>
  <!-- /.login-logo -->
  <div class="login-box-body">
-   <p class="login-box-msg">Daftarkan Akun Anda di Rempahkita</p>
+   <p class="login-box-msg">Daftar akun perpustakaan anda</p>
 
-   <?php $form = ActiveForm::begin(['id' => 'Daftar', 'enableClientValidation' => false]); ?>
+   <?php $form = ActiveForm::begin(['id' => 'Registrasi', 'enableClientValidation' => false]); ?>
 
    <?= $form
    ->field($model, 'username', $fieldOptions1)
@@ -72,22 +72,18 @@ $fieldOptions6 = [
    ->passwordInput(['placeholder' => 'password']) ?>
 
    <?= $form
-   ->field($model, 'no_telp', $fieldOptions4)
-   ->label(false)
-   ->textInput(['placeholder' => 'telepon']) ?>
-
-   <?= $form->field($model, 'jenis_kelamin')->radio(['label' => 'Laki-Laki', 'value' => 1, 'uncheck' => null]) ?>
-
-   <?= $form->field($model, 'jenis_kelamin')->radio(['label' => 'Perempuan', 'value' => 1, 'uncheck' => null]) ?>
-
-
-   <?= $form
    ->field($model, 'alamat', $fieldOptions6)
    ->label(false)
    ->textInput(['placeholder' => 'alamat']) ?>
 
+   <?= $form
+   ->field($model, 'no_telp', $fieldOptions4)
+   ->label(false)
+   ->textInput(['placeholder' => 'telepon']) ?>
+
    <?= $form->field($model, 'verifyCode')->widget(Captcha::className()) ?>
    
+   <?= $form->field($model, 'foto')->fileInput() ?>
 
    <div class="row">
     <!-- /.col -->

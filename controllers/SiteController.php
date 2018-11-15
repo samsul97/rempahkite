@@ -10,6 +10,16 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Daftar;
+use app\models\Forget;
+use app\models\RegistrasiAdmin;
+use app\models\Operator;
+use app\models\User;
+use yii\web\UploadedFile;
+use yii\data\ActiveDataProvider;
+use yii\widgets\ListView;
+use app\models\Customer;
+use app\models\LoginForms;
+
 
 class SiteController extends Controller
 {
@@ -72,8 +82,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout = '@app/views/layouts/pengunjung/main';
-        return $this->render('index');
+        if (!Yii::$app->user->isGuest)
+        {
+            return $this->redirect(['site/dashboard']);
+        }
+        else
+        {
+            $this->layout = '@app/views/layouts/pengunjung/main';
+            return $this->render('index');
+        }
     }
 
     /**
@@ -84,7 +101,7 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(['site/login']);
         }
 
         $model = new LoginForm();
@@ -98,6 +115,24 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionLogins()
+    {
+        $this->layout = '@app/views/layouts/pengunjung/main';
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect(['site/logins']);
+        }
+
+        $model = new LoginForms();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+
+        $model->password = '';
+        return $this->render('logins', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Logout action.
      *
@@ -107,7 +142,7 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->redirect(['site/login']);
     }
 
     /**
@@ -142,7 +177,7 @@ class SiteController extends Controller
     {
         $this->layout = 'main-login';
         $model = new Daftar();
-        if ($model->load(Yii::$app->request->post()))
+        if ($model->load(Yii::$app->request->post()) && $model->validate())
         {
             $customer = new Customer();
             $customer->nama = $model->nama;    
@@ -157,14 +192,15 @@ class SiteController extends Controller
             $user->id_customer = $customer->id;
             $user->id_user_role = $customer->id;
             $user->username = $model->username;    
-            $user->password = $model->password;    
+            $user->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);   
             $user->id_operator = 0;    
             $user->id_user_role = 2;    
             $user->status = 1;
             $user->token = Yii::$app->getSecurity()->generateRandomString ($length=50);
             $user->save();
-
-            return $this->redirect(['site/login']);
+            Yii::$app->session->setFlash('success', 'Berhasil Registrasi. Silahkan Login.');
+            
+            return $this->redirect(['site/logins']);
         }
 
         return $this->render('daftar', [
@@ -172,24 +208,72 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionBeranda()
+    public function actionDashboard()
     {
-        if (User::isAdmin())
-        {
-            return $this->render('beranda');
-        }
-        elseif (User::isCustomer()) {
-            return $this->render('beranda');
-        }
-        elseif (User::isOperator()) {
-            return $this->render('beranda');
+
+        if (User::isAdmin() || User::isOperator() || User::isCustomer()) {
+            $provider = new ActiveDataProvider([
+                'query' => \app\models\Produk::find(),
+                'pagination' => [
+                    'pageSize' => 6
+                ],
+            ]);
+            return $this->render('dashboard', ['provider' => $provider]);
         }
         else
         {
-            return $this->redirect(['site/login']);
+            return $this->redirect('site/login');
         }
-        // return $this->render('dashboard');
     }
 
+    public function actionForget()
+    {
+        $this->layout = 'main-login';
+        $model = new Forget();
+        if ($model->load(Yii::$app->request->post()))
+        {
+            return $this->redirect(['site/login']);
+        }
 
+        return $this->render('forget', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionRegistrasiAdmin()
+    {
+        $this->layout = 'main-login';
+        $model = new RegistrasiAdmin();
+        if ($model->load(Yii::$app->request->post()) && $model->validate())
+        {
+            $operator = new Operator();
+            $operator->nama = $model->nama;
+            $operator->alamat = $model->alamat;
+            $operator->email = $model->email;
+            $operator->no_telp = $model->no_telp;
+            $operator->status = 1;
+
+            $foto = UploadedFile::getInstance($model, 'foto');
+            $model->foto = time(). '_' . $foto->name;
+            $foto->saveAs(Yii::$app->basePath. '/web/user/' . $model->foto);
+            $operator->foto = $model->foto;
+            $operator->save();
+
+            $user = new User();
+            $user->username = $model->username;
+            $user->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+            $user->id_operator = $operator->id;
+            $user->id_user_role = $operator->id;
+            $user->id_customer = 0;    
+            $user->id_user_role = 3;
+            $user->status = 1;
+            $user->token = Yii::$app->getSecurity()->generateRandomString ($length=50);
+            $user->save();
+            Yii::$app->session->setFlash('success', 'Berhasil Registrasi. Silahkan Login.');
+            return $this->redirect(['site/login']);
+        }
+        return $this->render('registrasiadmin', [
+            'model' => $model,
+        ]);
+    }
 }

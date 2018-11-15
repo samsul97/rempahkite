@@ -31,6 +31,7 @@ class Customer extends \yii\db\ActiveRecord
         return [
             [['nama', 'email', 'no_telp'], 'required'],
             [['nama', 'email', 'no_telp'], 'string', 'max' => 255],
+            [['status'], 'required'],
         ];
     }
 
@@ -44,6 +45,16 @@ class Customer extends \yii\db\ActiveRecord
             'nama' => 'Nama',
             'email' => 'Email',
             'no_telp' => 'No Telp',
+            'status' => 'Status',
         ];
     }
+    public  static function getList()
+    {
+        return \yii\helpers\ArrayHelper::map(self::find()->all(), 'id', 'nama');
+    }
+    public static function getCount()
+    {
+        return static::find()->count();
+    }
+    
 }
