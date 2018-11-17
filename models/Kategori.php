@@ -4,7 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\models\Produk;
-
+use yii\helpers\StringHelper;
 /**
  * This is the model class for table "kategori".
  *
@@ -59,7 +59,7 @@ class Kategori extends \yii\db\ActiveRecord
     {
         $data = [];
         foreach (static::find()->all() as $produk) {
-            $data[] = [StringHelper::truncate($produk->nama, 20), (int) $produk->getManyProduk()->count()];
+            $data[] = [StringHelper::truncate($produk->nama_kategori, 20), (int) $produk->getManyProduk()->count()];
         }
         return $data;
     }

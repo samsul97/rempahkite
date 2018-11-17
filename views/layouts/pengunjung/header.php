@@ -65,8 +65,8 @@ use yii\helpers\Html;
             <li><?= Html::a('Daftar', ['site/daftar'])?></li>
             <li><?= Html::a('Login', ['site/logins'])?></li>
           </ul>
-          <form class="navbar-form navbar-left" role="search">
-            <div class="form-group" style="width: 200px;">
+          <form class="navbar-form navbar-left" role="search" style="width: 200px;">
+            <div class="form-group">
               <input type="text" class="form-control" id="navbar-search-input" placeholder="Search">
             </div>
           </form>
