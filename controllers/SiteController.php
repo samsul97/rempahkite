@@ -117,17 +117,18 @@ class SiteController extends Controller
 
     public function actionLogins()
     {
-        $this->layout = '@app/views/layouts/pengunjung/main';
+        $this->layout = 'main-login';
+        // $this->layout = '@app/views/layouts/pengunjung/main';
         if (!Yii::$app->user->isGuest) {
             return $this->redirect(['site/logins']);
         }
 
         $model = new LoginForms();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->render('dashboardcustomer');
         }
 
-        $model->password = '';
+        // $model->password = '';
         return $this->render('logins', [
             'model' => $model,
         ]);
@@ -223,6 +224,17 @@ class SiteController extends Controller
         else
         {
             return $this->redirect('site/login');
+        }
+    }
+
+    public function actionCustomerDashboard()
+    {
+        if (User::isCustomer()) {
+            return $this->render('dashboardcustomer');
+        }
+        else
+        {
+            return $this->redirect('site/logins');
         }
     }
 

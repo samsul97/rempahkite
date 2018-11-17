@@ -1,3 +1,8 @@
+<?php
+use yii\helpers\Html;
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,11 +62,11 @@
                 <li><a href="#">One more separated link</a></li>
               </ul>
             </li>
-            <li><a>Daftar</a></li>
-            <li><a href="#">Login</a></li>
+            <li><?= Html::a('Daftar', ['site/daftar'])?></li>
+            <li><?= Html::a('Login', ['site/logins'])?></li>
           </ul>
           <form class="navbar-form navbar-left" role="search">
-            <div class="form-group">
+            <div class="form-group" style="width: 200px;">
               <input type="text" class="form-control" id="navbar-search-input" placeholder="Search">
             </div>
           </form>

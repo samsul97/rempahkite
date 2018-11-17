@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'RempahKita.Com',
-    
+    'language' => 'id_ID',    
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [

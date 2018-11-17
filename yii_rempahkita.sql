@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2018 at 12:35 AM
+-- Generation Time: Nov 17, 2018 at 02:09 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -49,8 +49,16 @@ CREATE TABLE `customer` (
   `email` varchar(255) NOT NULL,
   `alamat` varchar(255) NOT NULL,
   `jenis_kelamin` varchar(255) NOT NULL,
-  `no_telp` varchar(255) NOT NULL
+  `no_telp` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`id`, `nama`, `email`, `alamat`, `jenis_kelamin`, `no_telp`, `status`) VALUES
+(3, 'anwar', 'anwar@gmail.com', 'kliwet', '1', '089765654545', 1);
 
 -- --------------------------------------------------------
 
@@ -87,8 +95,25 @@ CREATE TABLE `jasa_kirim` (
 
 CREATE TABLE `kategori` (
   `id` int(11) NOT NULL,
-  `nama_kategori` varchar(255) NOT NULL
+  `nama_kategori` varchar(255) NOT NULL,
+  `gambar` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kategori`
+--
+
+INSERT INTO `kategori` (`id`, `nama_kategori`, `gambar`) VALUES
+(1, 'Buah', ''),
+(2, 'Sayuran', ''),
+(3, 'Bahan Baku Masak', ''),
+(4, 'Bahan Baku Obat', ''),
+(5, 'Seafood', ''),
+(6, 'Rempah-Rempah', ''),
+(7, 'Daging', ''),
+(8, 'Bumbu Paketan', ''),
+(9, 'Kacang-Kacangan', ''),
+(10, 'Ikan', '');
 
 -- --------------------------------------------------------
 
@@ -117,6 +142,50 @@ CREATE TABLE `keranjang_produk` (
   `harga` decimal(10,0) NOT NULL,
   `id_jasa_kirim` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mitra`
+--
+
+CREATE TABLE `mitra` (
+  `id` int(11) NOT NULL,
+  `nama` int(255) NOT NULL,
+  `tempat` varchar(255) NOT NULL,
+  `penanggung_jawab` varchar(255) NOT NULL,
+  `telepon` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `no_siup` varchar(255) NOT NULL,
+  `npwp` varchar(255) NOT NULL,
+  `akte_pendirian` varchar(255) NOT NULL,
+  `sbu` varchar(255) NOT NULL,
+  `lampiran_kualifikasi` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `operator`
+--
+
+CREATE TABLE `operator` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `no_telp` varchar(255) NOT NULL,
+  `foto` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `operator`
+--
+
+INSERT INTO `operator` (`id`, `nama`, `email`, `alamat`, `no_telp`, `foto`, `status`) VALUES
+(3, 'samsul', 'samsulaculhadi@gmail.com', 'samsul', '089756565545', '1542243719_IMG_20160323_192922.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -155,6 +224,7 @@ CREATE TABLE `pesanan` (
 
 CREATE TABLE `produk` (
   `id` int(11) NOT NULL,
+  `id_kategori` int(11) NOT NULL,
   `nama_produk` varchar(255) NOT NULL,
   `stok` tinyint(4) NOT NULL,
   `quantity_minimum` int(11) NOT NULL,
@@ -163,6 +233,13 @@ CREATE TABLE `produk` (
   `sku` int(11) NOT NULL,
   `preview_url` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `produk`
+--
+
+INSERT INTO `produk` (`id`, `id_kategori`, `nama_produk`, `stok`, `quantity_minimum`, `harga`, `deskripsi_barang`, `sku`, `preview_url`) VALUES
+(1, 0, 'kangkung', 2, 2, '20000', '<p>kangkung segar dan berkualitas</p>', 2, 'sa');
 
 -- --------------------------------------------------------
 
@@ -177,6 +254,24 @@ CREATE TABLE `rating` (
   `bintang` int(11) NOT NULL,
   `komentar` text NOT NULL,
   `id_deleted` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `umkm`
+--
+
+CREATE TABLE `umkm` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `telepon` varchar(255) NOT NULL,
+  `penanggung_jawab` varchar(255) NOT NULL,
+  `ktp` varchar(255) NOT NULL,
+  `dokumen_pendukung` varchar(255) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -201,7 +296,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `id_operator`, `id_customer`, `id_user_role`, `status`, `token`) VALUES
-(1, 'admin', 'admin', NULL, NULL, 1, 1, '1');
+(1, 'admin', 'admin', NULL, NULL, 1, 1, '1'),
+(2, 'samsul', '$2y$13$hpVBp5NWN3ahN.kKSNMJa.YWL07adBRUHUBg9bql53FBNfaaT1sEe', 3, 0, 3, 1, 'ORfof7PAIA3QKo6ibZucROC7zTtCyb6p6wrW1Qgu04t1m1VXZt'),
+(5, 'anwar', '$2y$13$SHn3.pm/CAurt2VTQASUPuHRQFis9pDf0LuLrumeO1/XMjB4OPTDu', 0, 3, 2, 1, 'wzAMxBeE9IlwFr0ktNXN4YPgjmC5iGdQ9k1C-04sEZnS2PJpl7');
 
 -- --------------------------------------------------------
 
@@ -270,6 +367,18 @@ ALTER TABLE `keranjang_produk`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `mitra`
+--
+ALTER TABLE `mitra`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `operator`
+--
+ALTER TABLE `operator`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
@@ -291,6 +400,12 @@ ALTER TABLE `produk`
 -- Indexes for table `rating`
 --
 ALTER TABLE `rating`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `umkm`
+--
+ALTER TABLE `umkm`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -318,7 +433,7 @@ ALTER TABLE `content`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `images`
 --
@@ -333,7 +448,7 @@ ALTER TABLE `jasa_kirim`
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `keranjang`
 --
@@ -344,6 +459,16 @@ ALTER TABLE `keranjang`
 --
 ALTER TABLE `keranjang_produk`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `mitra`
+--
+ALTER TABLE `mitra`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `operator`
+--
+ALTER TABLE `operator`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `pembayaran`
 --
@@ -358,17 +483,22 @@ ALTER TABLE `pesanan`
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `umkm`
+--
+ALTER TABLE `umkm`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `user_role`
 --

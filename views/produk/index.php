@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-header with-border">
         </div>
         <div class="box-body">
-    <!-- <h1><?= Html::encode($this->title) ?></h1> -->
+    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'headerOptions' => ['style' => 'text-align:center;']
             ],
 
-            'id',
+            // 'id',
             'nama_produk',
             'stok',
             'quantity_minimum',
